@@ -7,30 +7,32 @@ import { Activity, Zap, TrendingUp, Shield } from 'lucide-react';
 
 export default function HomePage() {
   return (
-    <div className="space-y-12 max-w-6xl mx-auto">
+    <div className="space-y-20">
       {/* Hero Section */}
-      <div className="text-center space-y-6 pt-12">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/50">
+      <div className="text-center space-y-8 pt-8">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/50 animate-fade-in">
           <Zap className="h-4 w-4 text-primary" />
-          <span className="text-sm text-primary font-semibold">Edge AI Powered Fleet Management</span>
+          <span className="text-sm text-primary font-semibold">Edge AI Powered Tata Fleet Management</span>
         </div>
 
-        <h1 className="text-5xl sm:text-6xl font-bold text-balance">
-          VitalCore <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-cyan">Edge AI</span>
-        </h1>
+        <div className="space-y-6">
+          <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-balance leading-tight">
+            VitalCore <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent-cyan to-accent-purple">Edge AI</span>
+          </h1>
 
-        <p className="text-xl text-neutral-400 text-balance max-w-2xl mx-auto">
-          Production-grade vehicle health monitoring and predictive maintenance powered by edge computing
-        </p>
+          <p className="text-lg sm:text-xl text-neutral-400 text-balance max-w-3xl mx-auto leading-relaxed">
+            Production-grade vehicle health monitoring and predictive maintenance for Tata Motors fleet. Powered by edge computing and advanced ML.
+          </p>
+        </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
           <Link href="/dashboard">
-            <Button variant="primary" size="lg">
+            <Button variant="primary" size="lg" className="px-8">
               View Fleet Dashboard
             </Button>
           </Link>
           <Link href="/assistant">
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" className="px-8">
               Open AI Assistant
             </Button>
           </Link>
@@ -38,7 +40,7 @@ export default function HomePage() {
       </div>
 
       {/* Features Grid */}
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-6 pt-12">
         <Card variant="accent">
           <div className="flex gap-4">
             <div className="p-3 rounded-lg bg-primary/20 h-fit">
