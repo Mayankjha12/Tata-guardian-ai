@@ -1,6 +1,6 @@
 'use client';
 
-import { Github, Heart } from 'lucide-react';
+import { Heart } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -45,8 +45,7 @@ export function Footer() {
           <div className="space-y-3">
             <h4 className="text-sm font-semibold text-foreground">Resources</h4>
             <ul className="space-y-2 text-sm text-neutral-400">
-              <li><a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors flex items-center gap-2">
-                <Github className="h-4 w-4" />
+              <li><a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
                 GitHub
               </a></li>
               <li><a href="#" className="hover:text-foreground transition-colors">Documentation</a></li>
