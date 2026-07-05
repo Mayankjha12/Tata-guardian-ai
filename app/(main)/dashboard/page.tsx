@@ -4,9 +4,11 @@ import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { vehicleService } from '@/services/vehicle';
 import { VehicleCard } from '@/components/dashboard/VehicleCard';
+import { VehicleDrawer } from '@/components/dashboard/VehicleDrawer';
+import { Drawer } from '@/components/common/Drawer';
 import { Card } from '@/components/common/Card';
 import { Badge } from '@/components/common/Badge';
-import { VehicleStatus } from '@/types/vehicle';
+import { Vehicle, VehicleStatus } from '@/types/vehicle';
 import { filterVehicles, sortVehicles } from '@/utils/helpers';
 import { Search, Filter, Grid3x3 } from 'lucide-react';
 
@@ -15,6 +17,7 @@ export default function DashboardPage() {
   const [statusFilter, setStatusFilter] = useState<VehicleStatus | undefined>();
   const [sortBy, setSortBy] = useState('health');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
 
   // Fetch fleet data
   const { data: vehicles = [], isLoading } = useQuery({
@@ -43,49 +46,50 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="space-y-6">
+    <>
+    <div className="space-y-4">
       {/* Header */}
-      <div className="space-y-2">
+      <div className="space-y-1">
         <h1 className="text-3xl font-bold">Fleet Dashboard</h1>
-        <p className="text-neutral-400">Monitor and manage your vehicle fleet</p>
+        <p className="text-neutral-400 text-sm">Real-time monitoring of Tata Motors fleet</p>
       </div>
 
       {/* Stats Bar */}
       {fleetStats && (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-3">
-          <Card>
-            <div className="space-y-1">
-              <p className="text-xs text-neutral-500 uppercase">Total Vehicles</p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-2">
+          <Card className="p-3">
+            <div className="space-y-0.5">
+              <p className="text-xs text-neutral-500 uppercase font-semibold">Total Vehicles</p>
               <p className="text-2xl font-bold text-primary">{fleetStats.totalVehicles}</p>
             </div>
           </Card>
-          <Card>
-            <div className="space-y-1">
-              <p className="text-xs text-neutral-500 uppercase">Healthy</p>
+          <Card className="p-3">
+            <div className="space-y-0.5">
+              <p className="text-xs text-neutral-500 uppercase font-semibold">Healthy</p>
               <p className="text-2xl font-bold text-status-healthy">{fleetStats.healthyVehicles}</p>
             </div>
           </Card>
-          <Card>
-            <div className="space-y-1">
-              <p className="text-xs text-neutral-500 uppercase">Degrading</p>
+          <Card className="p-3">
+            <div className="space-y-0.5">
+              <p className="text-xs text-neutral-500 uppercase font-semibold">Degrading</p>
               <p className="text-2xl font-bold text-yellow-400">{fleetStats.degradingVehicles}</p>
             </div>
           </Card>
-          <Card>
-            <div className="space-y-1">
-              <p className="text-xs text-neutral-500 uppercase">Warning</p>
+          <Card className="p-3">
+            <div className="space-y-0.5">
+              <p className="text-xs text-neutral-500 uppercase font-semibold">Warning</p>
               <p className="text-2xl font-bold text-orange-400">{fleetStats.warningVehicles}</p>
             </div>
           </Card>
-          <Card>
-            <div className="space-y-1">
-              <p className="text-xs text-neutral-500 uppercase">Critical</p>
+          <Card className="p-3">
+            <div className="space-y-0.5">
+              <p className="text-xs text-neutral-500 uppercase font-semibold">Critical</p>
               <p className="text-2xl font-bold text-status-critical">{fleetStats.criticalVehicles}</p>
             </div>
           </Card>
-          <Card>
-            <div className="space-y-1">
-              <p className="text-xs text-neutral-500 uppercase">Avg Health</p>
+          <Card className="p-3">
+            <div className="space-y-0.5">
+              <p className="text-xs text-neutral-500 uppercase font-semibold">Avg Health</p>
               <p className="text-2xl font-bold text-accent-cyan">{fleetStats.averageHealthScore}%</p>
             </div>
           </Card>
@@ -93,8 +97,8 @@ export default function DashboardPage() {
       )}
 
       {/* Filters */}
-      <Card className="space-y-4">
-        <div className="flex flex-col sm:flex-row gap-4">
+      <Card className="space-y-3 p-4">
+        <div className="flex flex-col sm:flex-row gap-3">
           {/* Search */}
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-neutral-500" />
@@ -155,28 +159,38 @@ export default function DashboardPage() {
 
       {/* Results */}
       <div>
-        <p className="text-sm text-neutral-500 mb-4">
+        <p className="text-xs text-neutral-500 mb-3 uppercase font-semibold tracking-wide">
           {filteredVehicles.length} vehicle{filteredVehicles.length !== 1 ? 's' : ''} found
         </p>
 
         {isLoading ? (
-          <div className="text-center py-12 text-neutral-400">Loading fleet data...</div>
+          <div className="text-center py-8 text-neutral-400 text-sm">Loading fleet data...</div>
         ) : filteredVehicles.length === 0 ? (
-          <div className="text-center py-12 text-neutral-400">No vehicles match your filters</div>
+          <div className="text-center py-8 text-neutral-400 text-sm">No vehicles match your filters</div>
         ) : (
           <div
             className={
               viewMode === 'grid'
-                ? 'grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'
-                : 'space-y-4'
+                ? 'grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3'
+                : 'space-y-3'
             }
           >
             {filteredVehicles.map((vehicle) => (
-              <VehicleCard key={vehicle.id} vehicle={vehicle} />
+              <VehicleCard key={vehicle.id} vehicle={vehicle} onClick={setSelectedVehicle} />
             ))}
           </div>
         )}
       </div>
     </div>
+
+    {/* Vehicle Detail Drawer */}
+    <Drawer
+      isOpen={!!selectedVehicle}
+      onClose={() => setSelectedVehicle(null)}
+      title={selectedVehicle ? `${selectedVehicle.make} ${selectedVehicle.model}` : 'Vehicle Details'}
+    >
+      {selectedVehicle && <VehicleDrawer vehicle={selectedVehicle} />}
+    </Drawer>
+    </>
   );
 }

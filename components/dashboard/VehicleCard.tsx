@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { Vehicle } from '@/types/vehicle';
 import { Card } from '@/components/common/Card';
 import { Badge } from '@/components/common/Badge';
@@ -9,13 +8,14 @@ import { Gauge, MapPin, Zap } from 'lucide-react';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
+  onClick?: (vehicle: Vehicle) => void;
 }
 
-export function VehicleCard({ vehicle }: VehicleCardProps) {
+export function VehicleCard({ vehicle, onClick }: VehicleCardProps) {
   const healthScoreColor = getHealthScoreColor(vehicle.healthScore);
 
   return (
-    <Link href={`/vehicle/${vehicle.id}`}>
+    <button onClick={() => onClick?.(vehicle)} className="w-full text-left">
       <Card interactive variant="default" className="h-full">
         <div className="space-y-4">
           {/* Header */}
@@ -76,6 +76,6 @@ export function VehicleCard({ vehicle }: VehicleCardProps) {
           </div>
         </div>
       </Card>
-    </Link>
+    </button>
   );
 }
