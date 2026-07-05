@@ -66,7 +66,9 @@ export function VehicleDrawer({ vehicle }: VehicleDrawerProps) {
         </div>
         <div className="glass rounded-lg p-3 space-y-1">
           <p className="text-xs text-neutral-500 uppercase">Location</p>
-          <p className="text-xs">{vehicle.location.address.split(',')[0]}</p>
+          <p className="text-xs">
+  {vehicle.location.address?.split(",")[0] ?? "Unknown Location"}
+</p>
         </div>
       </div>
 
